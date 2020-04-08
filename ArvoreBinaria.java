@@ -168,11 +168,92 @@ class Arvore {
     }
 
     // fechamento class master
+public void caminhar() {
+    System.out.print("\n Exibindo em ordem: ");
+    inOrder(root);
+    System.out.print("\n Exibindo em pos-ordem: ");
+    posOrder(root);
+    System.out.print("\n Exibindo em pre-ordem: ");
+    preOrder(root);
+    System.out.print("\n Altura da arvore: " + altura(root));
+    System.out.print("\n Quantidade de folhas: " + folhas(root));
+    System.out.print("\n Quantidade de Nós: " + contarNos(root));
+    if (root != null ) {  // se arvore nao esta vazia
+       System.out.print("\n Valor minimo: " + min().item);
+       System.out.println("\n Valor maximo: " + max().item);
+    }
+  }
+
+  public void inOrder(No atual) {
+    if (atual != null) {
+      inOrder(atual.esq);
+      System.out.print(atual.item + " ");
+      inOrder(atual.dir);
+    }
+  }
+  
+  public void preOrder(No atual) {
+    if (atual != null) {
+      System.out.print(atual.item + " ");
+      preOrder(atual.esq);
+      preOrder(atual.dir);
+    }
+  }
+  
+  public void posOrder(No atual) {
+    if (atual != null) {
+      posOrder(atual.esq);
+      posOrder(atual.dir);
+      System.out.print(atual.item + " ");
+    }
+  }  
+  
+  public int altura(No atual) {
+     if(atual == null || (atual.esq == null && atual.dir == null))
+       return 0;
+     else {
+   	if (altura(atual.esq) > altura(atual.dir))
+   	   return ( 1 + altura(atual.esq) );
+   	else
+	   return ( 1 + altura(atual.dir) );
+     }
+  }
+  
+  public int folhas(No atual) {
+    if(atual == null) return 0;
+    if(atual.esq == null && atual.dir == null) return 1;
+    return folhas(atual.esq) + folhas(atual.dir);
+  }
+  
+  public int contarNos(No atual) {
+   if(atual == null)  return 0;
+   else return ( 1 + contarNos(atual.esq) + contarNos(atual.dir));
+  }
+
+  public No min() {
+    No atual = root;
+    No anterior = null;
+    while (atual != null) {
+      anterior = atual;
+      atual = atual.esq;
+    }
+    return anterior;
+  }
+
+  public No max() {
+    No atual = root;
+    No anterior = null;
+    while (atual != null) {
+      anterior = atual;
+      atual = atual.dir;
+    }
+    return anterior;
+  }
 }
 
 class ArvoreBinaria {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         Scanner ent = new Scanner(System.in);
         Arvore arv = new Arvore();
 
@@ -220,10 +301,14 @@ class ArvoreBinaria {
                     break;
                 }
                 case 4: {
-                    // arv.caminhar();
+                    arv.caminhar();
                     break;
                 }
             } // fim switch
         } while (opcao != 5);
     }
 }
+
+
+
+
